@@ -1,0 +1,11 @@
+const loader=document.getElementById("loader");
+window.addEventListener("load",()=>setTimeout(()=>loader?.classList.add("done"),900));
+const progress=document.getElementById("progress");
+window.addEventListener("scroll",()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?scrollY/max*100:0)+"%";});
+const menuToggle=document.getElementById("menuToggle"),menu=document.getElementById("menu");
+menuToggle?.addEventListener("click",()=>menu.classList.toggle("open"));
+menu?.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>menu.classList.remove("open")));
+const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");observer.unobserve(entry.target)}}),{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+const pin=document.getElementById("cavitePin"),stage=document.getElementById("mapStage");
+pin?.addEventListener("click",()=>{stage.classList.add("zoomed");pin.innerHTML='<span class="pin-pulse"></span><b>CAVITE SELECTED</b><small>SCROLL TO DESTINATIONS ↓</small>';document.getElementById("places").scrollIntoView({behavior:"smooth",block:"start"});});
